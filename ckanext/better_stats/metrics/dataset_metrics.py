@@ -145,7 +145,7 @@ class DatasetCreationHistoryMetric(MetricBase):
         client = make_connection()
 
         oldest = solr_search(
-            fq=["state:active", "type:dataset"],
+            fq=["state:active"],
             client=client,
             rows=1,
             sort="metadata_created asc",
@@ -158,7 +158,7 @@ class DatasetCreationHistoryMetric(MetricBase):
         earliest = raw.strftime("%Y-%m-%dT%H:%M:%SZ") if isinstance(raw, datetime) else str(raw)
 
         resp = solr_search(
-            fq=["state:active", "type:dataset"],
+            fq=["state:active"],
             client=client,
             rows=0,
             facet="on",
