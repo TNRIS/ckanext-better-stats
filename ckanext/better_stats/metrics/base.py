@@ -46,6 +46,23 @@ class MetricBase(ABC):
     scope: ClassVar[const.MetricScope] = const.MetricScope.GLOBAL
     group: ClassVar[const.MetricGroup] = const.GENERAL_GROUP
 
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        """Validate the visualization configuration of every metric subclass."""
+        super().__init_subclass__(**kwargs)
+
+        if not cls.supported_visualizations:
+            raise ValueError(
+                f"{cls.__name__}: supported_visualizations must not be empty",
+            )
+
+        if cls.default_visualization not in cls.supported_visualizations:
+            raise ValueError(
+                f"{cls.__name__}: default_visualization "
+                f"{cls.default_visualization.value!r} is not listed in "
+                f"supported_visualizations "
+                f"{[v.value for v in cls.supported_visualizations]}",
+            )
+
     def __init__(  # noqa: PLR0913
         self,
         name: str,
