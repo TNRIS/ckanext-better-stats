@@ -37,6 +37,23 @@
   border-collapse: collapse;
   font-size: 0.875rem;
 
+  th {
+    cursor: pointer;
+    position: relative;
+  }
+
+  th[aria-sort="ascending"]::after {
+    content: "▲";
+    position: absolute;
+    right: 1rem;
+  }
+
+  th[aria-sort="descending"]::after {
+    content: "▼";
+    position: absolute;
+    right: 1rem;
+  }
+
   thead th {
     padding: 0.5rem 1rem;
     font-size: 0.7rem;

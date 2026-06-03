@@ -5,6 +5,9 @@ better_stats-js:
     - js/vendor/echarts.min.js
     - js/vendor/echarts-dark.js
     - js/vendor/snapdom.min.js
+    - js/vendor/tablesort.min.js
+    - js/vendor/tablesort.date.min.js
+    - js/vendor/tablesort.number.min.js
     - js/bstats.min.js
   extra:
     preload:

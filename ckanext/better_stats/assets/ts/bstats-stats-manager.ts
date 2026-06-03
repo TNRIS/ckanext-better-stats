@@ -2,6 +2,7 @@ import { VIZ, VizType } from "./bstats-types";
 
 declare const echarts: any;
 declare const bootstrap: any;
+declare const Tablesort: any;
 
 ckan.module("bstats-stats-manager", function ($: any) {
     return {
@@ -134,7 +135,7 @@ class BetterStatsManager {
         const id = contentId ?? data.name;
         switch (vizType) {
             case VIZ.CHART: this.renderChart(container, data, id); break;
-            case VIZ.TABLE: this.renderTable(container, data); break;
+            case VIZ.TABLE: this.renderTable(container, data, id); break;
             case VIZ.CARD: this.renderCard(container, data); break;
             case VIZ.PROGRESS: this.renderProgress(container, data); break;
         }
@@ -165,7 +166,7 @@ class BetterStatsManager {
         }
     }
 
-    renderTable(container: HTMLElement, data: any) {
+    renderTable(container: HTMLElement, data: any, contentId?: string) {
         const tableData = data.data;
 
         if (!tableData?.rows?.length) {
@@ -174,7 +175,7 @@ class BetterStatsManager {
         }
 
         const wrapper = this._el("div", { className: "metric-table-wrapper" });
-        const table = this._el("table", { className: "metric-table" });
+        const table = this._el("table", { className: "metric-table", id: `table-${contentId}` });
         const thead = this._el("thead");
         const headerRow = this._el("tr");
 
@@ -206,6 +207,9 @@ class BetterStatsManager {
         table.appendChild(tbody);
         wrapper.appendChild(table);
         container.appendChild(wrapper);
+
+        // Sortable table
+        new Tablesort(table);
     }
 
     renderProgress(container: HTMLElement, data: any) {
